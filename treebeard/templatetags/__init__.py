@@ -6,6 +6,7 @@ from django.utils import formats, timezone, six
 from django.utils.encoding import smart_text
 from django.utils.html import conditional_escape
 from django.utils.safestring import mark_safe
+from django.utils.translation import ugettext as _
 
 action_form_var = Variable('action_form')
 
@@ -21,7 +22,10 @@ def display_for_value(value, boolean=False):  # pragma: no cover
     """ Added for compatibility with django 1.4, copied from django trunk.
     """
     from django.contrib.admin.templatetags.admin_list import _boolean_icon
-    from django.contrib.admin.views.main import EMPTY_CHANGELIST_VALUE
+    try:
+        from django.contrib.admin.views.main import EMPTY_CHANGELIST_VALUE
+    except:
+        EMPTY_CHANGELIST_VALUE = _('(None)')
 
     if boolean:
         return _boolean_icon(value)
