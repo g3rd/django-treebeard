@@ -52,6 +52,8 @@ try:
 except ImportError:
     from treebeard.templatetags import display_for_value, format_html
 
+from treebeard.templatetags import needs_checkboxes
+
 
 def get_result_and_row_class(cl, field_name, result):
     row_class = ''
