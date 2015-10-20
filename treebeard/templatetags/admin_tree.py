@@ -12,16 +12,19 @@ from django.db import models
 from django.conf import settings
 from django.contrib.admin.templatetags.admin_list import (
     result_headers, result_hidden_fields)
+from django.utils.translation import ugettext_lazy as _
 try:
     from django.contrib.admin.utils import lookup_field, display_for_field
 except ImportError:  # < Django 1.8
     from django.contrib.admin.util import lookup_field, display_for_field
-from django.contrib.admin.views.main import EMPTY_CHANGELIST_VALUE
+try:
+    from django.contrib.admin.views.main import EMPTY_CHANGELIST_VALUE
+except:
+    EMPTY_CHANGELIST_VALUE = _('(None)')
 from django.core.exceptions import ObjectDoesNotExist
 from django.template import Library
 from django.utils.html import conditional_escape
 from django.utils.safestring import mark_safe
-from django.utils.translation import ugettext_lazy as _
 
 
 if sys.version < '3':
@@ -48,8 +51,6 @@ try:
     from django.utils.html import format_html
 except ImportError:
     from treebeard.templatetags import display_for_value, format_html
-
-from treebeard.templatetags import needs_checkboxes
 
 
 def get_result_and_row_class(cl, field_name, result):
